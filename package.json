@@ -1,6 +1,6 @@
 {
   "name": "uupaa.mpeg2ts.js",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "MPEG2TS decoder",
   "url": "https://github.com/uupaa/MPEG2TS.js",
   "keywords": ["MPEG2", "MPEG2TS", "video", "uupaa", "WebModule", "Unstable"],
