@@ -1545,12 +1545,13 @@ var BEER  = "\uD83C\uDF7B";
 
 // --- class / interfaces ----------------------------------
 function Test(moduleName, // @arg String|StringArray - target modules.
-              options) {  // @arg Object = {} - { disable, browser, worker, node, nw, button, both, ignoreError }
+              options) {  // @arg Object = {} - { disable, browser, worker, node, nw, el, button, both, ignoreError }
                           // @options.disable     Boolean = false - Disable all tests.
                           // @options.browser     Boolean = false - Enable the browser test.
                           // @options.worker      Boolean = false - Enable the webWorker test.
                           // @options.node        Boolean = false - Enable the node.js test.
-                          // @options.nw          Boolean = false - Enable the node-webkit test.
+                          // @options.nw          Boolean = false - Enable the NW.js test.
+                          // @options.el          Boolean = false - Enable the Electron (render process) test.
                           // @options.button      Boolean = false - Show test buttons.
                           // @options.both        Boolean = false - Test the primary and secondary module.
                           // @options.ignoreError Boolean = false - ignore error
@@ -1565,6 +1566,7 @@ function Test(moduleName, // @arg String|StringArray - target modules.
     this._worker      = options["worker"]      || false;
     this._node        = options["node"]        || false;
     this._nw          = options["nw"]          || false;
+    this._el          = options["el"]          || false;
     this._button      = options["button"]      || false;
     this._both        = options["both"]        || false;
     this._ignoreError = options["ignoreError"] || false;
@@ -1576,6 +1578,7 @@ function Test(moduleName, // @arg String|StringArray - target modules.
         this._worker  = false;
         this._node    = false;
         this._nw      = false;
+        this._el      = false;
         this._button  = false;
         this._both    = false;
     }
@@ -1598,7 +1601,7 @@ function Test_run(deprecated) { // @ret TestFunctionArray
     if (deprecated) { throw new Error("argument error"); }
 
     var that = this;
-    var plan = "node_primary > browser_primary > worker_primary > nw_primary";
+    var plan = "node_primary > browser_primary > worker_primary > nw_primary > el_primary";
 
     if (that._both) {
         if (IN_WORKER) {
@@ -1612,6 +1615,7 @@ function Test_run(deprecated) { // @ret TestFunctionArray
         browser_primary: function(task)     { _browserTestRunner(that, task); },
         worker_primary: function(task)      { _workerTestRunner(that, task); },
         nw_primary: function(task)          { _nwTestRunner(that, task); },
+        el_primary: function(task)          { _elTestRunner(that, task); },
         swap: function(task) {
             _swap(that);
             task.pass();
@@ -1620,6 +1624,7 @@ function Test_run(deprecated) { // @ret TestFunctionArray
         browser_secondary: function(task)   { _browserTestRunner(that, task); },
         worker_secondary: function(task)    { _workerTestRunner(that, task); },
 //      nw_secondary: function(task)        { _nwTestRunner(that, task); },
+//      el_secondary: function(task)        { _elTestRunner(that, task); },
     }, function taskFinished(err) {
         _undo(that);
 //        if (err && global["console"]) {
@@ -1652,7 +1657,7 @@ function _testRunner(that,               // @arg this
         }
         var test = {
             done: function(error) {
-                if (IN_BROWSER || IN_NW) {
+                if (IN_BROWSER || IN_NW || IN_EL) {
                     if (that._button) {
                         _addTestButton(that, testCase, error ? "red" : "green");
                     }
@@ -1716,6 +1721,20 @@ function _nwTestRunner(that, task) {
             if (document["readyState"] === "complete") { // already document loaded
                 _onload(that, task);
             } else {
+                global.addEventListener("load", function() { _onload(that, task); });
+            }
+            return;
+        }
+    }
+    task.pass();
+}
+
+function _elTestRunner(that, task) {
+    if (that._el) {
+        if (IN_EL) {
+            if (document["readyState"] === "complete") { // already document loaded
+                _onload(that, task);
+            } else if (global.addEventListener) {
                 global.addEventListener("load", function() { _onload(that, task); });
             }
             return;
@@ -1840,6 +1859,7 @@ function _getConsoleStyle() {
         return IN_NODE   ? "node"
              : IN_WORKER ? "worker"
              : IN_NW     ? "nw"
+             : IN_EL     ? "el"
              : STYLISH   ? "color" : "browser";
     }
     return "";
@@ -1857,7 +1877,8 @@ function _getPassFunction(that, passMessage) { // @ret PassFunction
     case "worker":  return console.log.bind(console,      "Worker(" + order + "): " + passMessage);
     case "color":   return console.log.bind(console,   "%cBrowser(" + order + "): " + passMessage + "%c ", "color:#0c0", "");
     case "browser": return console.log.bind(console,     "Browser(" + order + "): " + passMessage);
-    case "nw":      return console.log.bind(console, "node-webkit(" + order + "): " + passMessage);
+    case "nw":      return console.log.bind(console,          "nw(" + order + "): " + passMessage);
+    case "el":      return console.log.bind(console,    "electron(" + order + "): " + passMessage);
     }
     return null;
 }
@@ -1870,7 +1891,8 @@ function _getMissFunction(that, missMessage) { // @ret MissFunction
     case "worker":  return function() { console.error(   "Worker(" + order + "): " + missMessage);                           return new Error(); };
     case "color":   return function() { console.error("%cBrowser(" + order + "): " + missMessage + "%c ", "color:#red", ""); return new Error(); };
     case "browser": return function() { console.error(  "Browser(" + order + "): " + missMessage);                           return new Error(); };
-    case "nw":      return function() { console.error("node-webkit("+order + "): " + missMessage);                           return new Error(); };
+    case "nw":      return function() { console.error(       "nw(" + order + "): " + missMessage);                           return new Error(); };
+    case "el":      return function() { console.error( "electron(" + order + "): " + missMessage);                           return new Error(); };
     }
     return null;
 }
@@ -1879,9 +1901,9 @@ function _finishedLog(that, err) {
     var n = that._secondary ? 2 : 1;
 
     if (err) {
-        _getMissFunction(that, GHOST.repeat(n) + "  SOME MISSED.")();
+        _getMissFunction(that, GHOST.repeat(n) + "  MISS.")();
     } else {
-        _getPassFunction(that, BEER.repeat(n)  + "  ALL PASSED.")();
+        _getPassFunction(that, BEER.repeat(n)  + "  PASS ALL.")();
     }
 }
 

@@ -4,10 +4,14 @@
 
 MPEG2TS decoder
 
-- Please refer to [Spec](https://github.com/uupaa/MPEG2TS.js/wiki/) and [API Spec](https://github.com/uupaa/MPEG2TS.js/wiki/MPEG2TS) links.
-- The MPEG2TS.js is made of [WebModule](https://github.com/uupaa/WebModule).
 
-## Browser and NW.js(node-webkit)
+This module made of [WebModule](https://github.com/uupaa/WebModule).
+
+## Documentation
+- [Spec](https://github.com/uupaa/MPEG2TS.js/wiki/)
+- [API Spec](https://github.com/uupaa/MPEG2TS.js/wiki/MPEG2TS)
+
+## Browser, NW.js and Electron
 
 ```js
 <script src="<module-dir>/lib/WebModule.js"></script>

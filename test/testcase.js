@@ -8,6 +8,7 @@ var test = new Test("MPEG2TS", {
         worker:     false,  // enable worker test.
         node:       false,  // enable node test.
         nw:         false,  // enable nw.js test.
+        el:         false,  // enable Electron test.
         button:     false,  // show button.
         both:       true,  // test the primary and secondary modules.
         ignoreError:false, // ignore error.
@@ -16,7 +17,6 @@ var test = new Test("MPEG2TS", {
         errorback:  function(error) {
         }
     }).add([
-        // generic test
     ]);
 
 if (IN_BROWSER || IN_NW) {
@@ -36,7 +36,8 @@ if (IN_BROWSER || IN_NW) {
 
 // --- test cases ------------------------------------------
 function testMPEG2TS_parse(test, pass, miss) {
-    var url = "../node_modules/uupaa.assetfortest.js/assets/MP4/res/ts/7.ts";
+  //var url = "../../node_modules/uupaa.assetfortest.js/assets/MP4/res/ts/7.ts";
+    var url = "../../node_modules/uupaa.stockmedia/res/mpeg2ts/sample1/v.stream/v000.ts";
 
 //    MPEG2TS.VERBOSE = true;
     global["BENCHMARK"] = true;
@@ -57,10 +58,6 @@ function testMPEG2TS_parse(test, pass, miss) {
         console.log(error.message);
         test.done(error);
     });
-}
-
-function dump(src, begin, end, radix, markup) {
-    TypedArray.dump(src, begin, end, radix, markup);
 }
 
 return test.run();

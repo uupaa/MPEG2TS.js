@@ -1,6 +1,6 @@
 {
   "name": "uupaa.mpeg2ts.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "MPEG2TS decoder",
   "url": "https://github.com/uupaa/MPEG2TS.js",
   "keywords": ["MPEG2", "MPEG2TS", "video", "uupaa", "WebModule", "Unstable"],
@@ -16,11 +16,13 @@
     "watch": "node ../WebModule/run/watch.js --verbose --run lint",
     "page": "node ../WebModule/run/page.js --verbose",
     "test": "npm run min; npm run node; npm run browser",
-    "node": "NODE_ENV=production NODE_PATH=lib node --harmony test/node.js",
-    "noded": "NODE_ENV=production NODE_PATH=lib node --debug-brk --harmony test/node.js",
-    "browser": "open http://localhost:8000/MPEG2TS.js/test/index.html",
+    "node": "NODE_ENV=production NODE_PATH=lib node test/node/index.js",
+    "noded": "NODE_ENV=production NODE_PATH=lib node --debug-brk test/node/index.js",
+    "browser": "open http://localhost:8000/MPEG2TS.js/test/browser/index.html",
+    "el": "electron test/el",
+    "nw": "nw test/nw",
     "add-src": "node ../WebModule/run/add-src.js",
-    "sim": "node ../WebModule/run/sim.js http://localhost:8000/MPEG2TS.js/test/index.html",
+    "sim": "node ../WebModule/run/sim.js http://localhost:8000/MPEG2TS.js/test/browser/index.html",
     "simx": "node ../WebModule/run/sim.js stop",
     "lint": "eslint lib/*.js",
     "score": "node ../WebModule/run/score.js; open lint/plato/index.html",
@@ -47,13 +49,18 @@
     "nw": {
       "source": ["lib/MPEG2TS.js"],
       "output": "release/MPEG2TS.nw.min.js"
+    },
+    "el": {
+      "source": ["lib/MPEG2TS.js"],
+      "output": "release/MPEG2TS.el.min.js"
     }
   },
   "dependencies": {
+    "uupaa.stockmedia": "",
     "uupaa.bit.js": "",
     "uupaa.hash.js": "",
     "uupaa.typedarray.js": "",
-    "uupaa.assetfortest.js": ""
+    "uupaa.m3u.js": ""
   },
   "devDependencies": {},
   "lib": "./lib/",
