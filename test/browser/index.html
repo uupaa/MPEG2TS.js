@@ -4,16 +4,18 @@
 
 <script src="../../lib/WebModule.js"></script>
 <script>
-// publish to global
+WebModule.verify  = true;
+WebModule.verbose = true;
 WebModule.publish = true;
 </script>
 
 <script src="../../node_modules/uupaa.bit.js/lib/Bit.js"></script>
 <script src="../../node_modules/uupaa.bit.js/lib/BitView.js"></script>
 <script src="../../node_modules/uupaa.hash.js/lib/Hash.js"></script>
+<script src="../../node_modules/uupaa.hexdump.js/lib/HexDump.js"></script>
 <script src="../../node_modules/uupaa.typedarray.js/lib/TypedArray.js"></script>
-<script src="../../node_modules/uupaa.m3u.js/lib/M3U.js"></script>
 <script src="../wmtools.js"></script>
+<script src="../../lib/MPEG2TSParser.js"></script>
 <script src="../../lib/MPEG2TS.js"></script>
 <script src="../../release/MPEG2TS.b.min.js"></script>
 <script src="../testcase.js"></script>

@@ -1,9 +1,9 @@
 {
   "name": "uupaa.mpeg2ts.js",
-  "version": "0.0.2",
-  "description": "MPEG2TS decoder",
+  "version": "0.0.4",
+  "description": "MPEG2TS demuxer",
   "url": "https://github.com/uupaa/MPEG2TS.js",
-  "keywords": ["MPEG2", "MPEG2TS", "video", "uupaa", "WebModule", "Unstable"],
+  "keywords": ["MPEG-2", "MPEG-2 TS", "MPEG-2 System", "demuxer", "uupaa", "WebModule", "Unstable"],
   "repository": {
     "type": "git",
     "url": "https://github.com/uupaa/MPEG2TS.js.git"
@@ -22,6 +22,7 @@
     "el": "electron test/el",
     "nw": "nw test/nw",
     "add-src": "node ../WebModule/run/add-src.js",
+    "add-subclass": "node ../WebModule/run/add-subclass.js",
     "sim": "node ../WebModule/run/sim.js http://localhost:8000/MPEG2TS.js/test/browser/index.html",
     "simx": "node ../WebModule/run/sim.js stop",
     "lint": "eslint lib/*.js",
@@ -35,32 +36,46 @@
     "develop": false,
     "label": ["@dev"],
     "browser": {
-      "source": ["lib/MPEG2TS.js"],
-      "output": "release/MPEG2TS.b.min.js"
+      "output": "release/MPEG2TS.b.min.js",
+      "source": [
+        "lib/MPEG2TSParser.js",
+        "lib/MPEG2TS.js"
+      ]
     },
     "worker": {
-      "source": ["lib/MPEG2TS.js"],
-      "output": "release/MPEG2TS.w.min.js"
+      "output": "release/MPEG2TS.w.min.js",
+      "source": [
+        "lib/MPEG2TSParser.js",
+        "lib/MPEG2TS.js"
+      ]
     },
     "node": {
-      "source": ["lib/MPEG2TS.js"],
-      "output": "release/MPEG2TS.n.min.js"
+      "output": "release/MPEG2TS.n.min.js",
+      "source": [
+        "lib/MPEG2TSParser.js",
+        "lib/MPEG2TS.js"
+      ]
     },
     "nw": {
-      "source": ["lib/MPEG2TS.js"],
-      "output": "release/MPEG2TS.nw.min.js"
+      "output": "release/MPEG2TS.nw.min.js",
+      "source": [
+        "lib/MPEG2TSParser.js",
+        "lib/MPEG2TS.js"
+      ]
     },
     "el": {
-      "source": ["lib/MPEG2TS.js"],
-      "output": "release/MPEG2TS.el.min.js"
+      "output": "release/MPEG2TS.el.min.js",
+      "source": [
+        "lib/MPEG2TSParser.js",
+        "lib/MPEG2TS.js"
+      ]
     }
   },
   "dependencies": {
-    "uupaa.stockmedia": "",
     "uupaa.bit.js": "",
     "uupaa.hash.js": "",
-    "uupaa.typedarray.js": "",
-    "uupaa.m3u.js": ""
+    "uupaa.hexdump.js": "",
+    "uupaa.typedarray.js": ""
   },
   "devDependencies": {},
   "lib": "./lib/",

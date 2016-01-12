@@ -2,14 +2,20 @@
 
 [![npm](https://nodei.co/npm/uupaa.mpeg2ts.js.svg?downloads=true&stars=true)](https://nodei.co/npm/uupaa.mpeg2ts.js/)
 
-MPEG2TS decoder
-
+MPEG-2 TS demuxer.
 
 This module made of [WebModule](https://github.com/uupaa/WebModule).
 
 ## Documentation
 - [Spec](https://github.com/uupaa/MPEG2TS.js/wiki/)
 - [API Spec](https://github.com/uupaa/MPEG2TS.js/wiki/MPEG2TS)
+
+## Setup
+
+```sh
+$ cd test/assets
+$ ./make_video
+```
 
 ## Browser, NW.js and Electron
 
