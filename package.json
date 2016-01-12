@@ -1,7 +1,7 @@
 {
   "name": "uupaa.mpeg2ts.js",
-  "version": "0.0.4",
-  "description": "MPEG2TS demuxer",
+  "version": "0.0.5",
+  "description": "MPEG-2 TS demuxer.",
   "url": "https://github.com/uupaa/MPEG2TS.js",
   "keywords": ["MPEG-2", "MPEG-2 TS", "MPEG-2 System", "demuxer", "uupaa", "WebModule", "Unstable"],
   "repository": {

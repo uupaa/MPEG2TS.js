@@ -51,7 +51,7 @@ function testMPEG2TS_get_timing_and_duration(test, pass, miss) {
         console.log("LOAD FROM: ", sourceFile, buffer.byteLength);
 
         var mpeg2ts                 = MPEG2TS.parse(new Uint8Array(buffer));
-        var videoPESPacket          = MPEG2TS.convertPacketToPESPacket(mpeg2ts["VIDEO_TS_PACKET"]);
+        var videoPESPacket          = MPEG2TS.convertTSPacketToPESPacket(mpeg2ts["VIDEO_TS_PACKET"]);
         var videoByteStream         = MPEG2TS.convertPESPacketToByteStream(videoPESPacket);
         //var videoNALUnitArray       = ByteStream.toNALUnit(videoByteStream);
         //var videoNALUnitObjectArray = NALUnit.toNALUnitObject(videoNALUnitArray);
