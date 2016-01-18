@@ -1,6 +1,6 @@
 {
   "name": "uupaa.mpeg2ts.js",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "MPEG-2 TS demuxer.",
   "url": "https://github.com/uupaa/MPEG2TS.js",
   "keywords": ["MPEG-2", "MPEG-2 TS", "MPEG-2 System", "demuxer", "uupaa", "WebModule", "Unstable"],
@@ -38,36 +38,36 @@
     "browser": {
       "output": "release/MPEG2TS.b.min.js",
       "source": [
-        "lib/MPEG2TS.js",
-        "lib/MPEG2TSParser.js"
+        "lib/MPEG2TSParser.js",
+        "lib/MPEG2TS.js"
       ]
     },
     "worker": {
       "output": "release/MPEG2TS.w.min.js",
       "source": [
-        "lib/MPEG2TS.js",
-        "lib/MPEG2TSParser.js"
+        "lib/MPEG2TSParser.js",
+        "lib/MPEG2TS.js"
       ]
     },
     "node": {
       "output": "release/MPEG2TS.n.min.js",
       "source": [
-        "lib/MPEG2TS.js",
-        "lib/MPEG2TSParser.js"
+        "lib/MPEG2TSParser.js",
+        "lib/MPEG2TS.js"
       ]
     },
     "nw": {
       "output": "release/MPEG2TS.nw.min.js",
       "source": [
-        "lib/MPEG2TS.js",
-        "lib/MPEG2TSParser.js"
+        "lib/MPEG2TSParser.js",
+        "lib/MPEG2TS.js"
       ]
     },
     "el": {
       "output": "release/MPEG2TS.el.min.js",
       "source": [
-        "lib/MPEG2TS.js",
-        "lib/MPEG2TSParser.js"
+        "lib/MPEG2TSParser.js",
+        "lib/MPEG2TS.js"
       ]
     }
   },
