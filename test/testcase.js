@@ -19,22 +19,20 @@ var test = new Test(["MPEG2TS"], { // Add the ModuleName to be tested here (if n
 
 if (IN_BROWSER || IN_NW || IN_EL) {
     test.add([
-        testMPEG2TS_get_timing_and_duration,
+        testMPEG2TS,
     ]);
 }
 
 // --- test cases ------------------------------------------
-function testMPEG2TS_get_timing_and_duration(test, pass, miss) {
+function testMPEG2TS(test, pass, miss) {
     var sourceFile = "../assets/ff/png.all.mp4.00.ts";
 
     FileLoader.toArrayBuffer(sourceFile, function(buffer) {
         console.log("LOAD FROM: ", sourceFile, buffer.byteLength);
 
-        var mpeg2ts                 = MPEG2TS.parse(new Uint8Array(buffer));
-        var videoPESPacket          = MPEG2TS.convertTSPacketToPESPacket(mpeg2ts["VIDEO_TS_PACKET"]);
-        var videoByteStream         = MPEG2TS.convertPESPacketToByteStream(videoPESPacket);
-        //var videoNALUnitArray       = ByteStream.toNALUnit(videoByteStream);
-        //var videoNALUnitObjectArray = NALUnit.toNALUnitObject(videoNALUnitArray);
+        var mpeg2ts                 = MPEG2TS.parse( new Uint8Array(buffer) );
+        var videoByteStream         = MPEG2TS.convertTSPacketToByteStream( mpeg2ts["VIDEO_TS_PACKET"] );
+        var videoNALUnitObjectArray = MPEG4ByteStream.convertByteStreamToNALUnitObjectArray( videoByteStream );
 
         test.done(pass());
 

@@ -14,15 +14,25 @@ onmessage = function(event) {
 
     importScripts("../../lib/WebModule.js");
 
-    WebModule.verify  = true;
-    WebModule.verbose = true;
-    WebModule.publish = true;
+    WebModule.VERIFY  = true;
+    WebModule.VERBOSE = true;
+    WebModule.PUBLISH = true;
 
     importScripts("../../node_modules/uupaa.bit.js/lib/Bit.js");
     importScripts("../../node_modules/uupaa.bit.js/lib/BitView.js");
     importScripts("../../node_modules/uupaa.hash.js/lib/Hash.js");
     importScripts("../../node_modules/uupaa.hexdump.js/lib/HexDump.js");
     importScripts("../../node_modules/uupaa.fileloader.js/lib/FileLoader.js");
+    importScripts("../../node_modules/uupaa.mpeg4bytestream.js/node_modules/uupaa.nalunit.js/lib/NALUnitType.js");
+    importScripts("../../node_modules/uupaa.mpeg4bytestream.js/node_modules/uupaa.nalunit.js/lib/NALUnitParameterSet.js");
+    importScripts("../../node_modules/uupaa.mpeg4bytestream.js/node_modules/uupaa.nalunit.js/lib/NALUnitEBSP.js");
+    importScripts("../../node_modules/uupaa.mpeg4bytestream.js/node_modules/uupaa.nalunit.js/lib/NALUnitAUD.js");
+    importScripts("../../node_modules/uupaa.mpeg4bytestream.js/node_modules/uupaa.nalunit.js/lib/NALUnitSPS.js");
+    importScripts("../../node_modules/uupaa.mpeg4bytestream.js/node_modules/uupaa.nalunit.js/lib/NALUnitPPS.js");
+    importScripts("../../node_modules/uupaa.mpeg4bytestream.js/node_modules/uupaa.nalunit.js/lib/NALUnitSEI.js");
+    importScripts("../../node_modules/uupaa.mpeg4bytestream.js/node_modules/uupaa.nalunit.js/lib/NALUnitIDR.js");
+    importScripts("../../node_modules/uupaa.mpeg4bytestream.js/node_modules/uupaa.nalunit.js/lib/NALUnit.js");
+    importScripts("../../node_modules/uupaa.mpeg4bytestream.js/lib/MPEG4ByteStream.js");
     importScripts("../wmtools.js");
     importScripts("../../lib/MPEG2TSParser.js");
     importScripts("../../lib/MPEG2TS.js");
