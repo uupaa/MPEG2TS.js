@@ -2,15 +2,15 @@
 
 require("../../lib/WebModule.js");
 
-WebModule.verify  = true;
-WebModule.verbose = true;
-WebModule.publish = true;
+WebModule.VERIFY  = true;
+WebModule.VERBOSE = true;
+WebModule.PUBLISH = true;
 
 require("../../node_modules/uupaa.bit.js/lib/Bit.js");
 require("../../node_modules/uupaa.bit.js/lib/BitView.js");
 require("../../node_modules/uupaa.hash.js/lib/Hash.js");
 require("../../node_modules/uupaa.hexdump.js/lib/HexDump.js");
-require("../../node_modules/uupaa.typedarray.js/lib/TypedArray.js");
+require("../../node_modules/uupaa.fileloader.js/lib/FileLoader.js");
 require("../wmtools.js");
 require("../../lib/MPEG2TSParser.js");
 require("../../lib/MPEG2TS.js");

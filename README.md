@@ -2,7 +2,7 @@
 
 [![npm](https://nodei.co/npm/uupaa.mpeg2ts.js.svg?downloads=true&stars=true)](https://nodei.co/npm/uupaa.mpeg2ts.js/)
 
-MPEG-2 TS demuxer.
+MPEG-2 TS Demuxer.
 
 This module made of [WebModule](https://github.com/uupaa/WebModule).
 

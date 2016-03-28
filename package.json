@@ -1,7 +1,7 @@
 {
   "name": "uupaa.mpeg2ts.js",
-  "version": "0.0.8",
-  "description": "MPEG-2 TS demuxer.",
+  "version": "0.0.10",
+  "description": "MPEG-2 TS Demuxer.",
   "url": "https://github.com/uupaa/MPEG2TS.js",
   "keywords": ["MPEG-2", "MPEG-2 TS", "MPEG-2 System", "demuxer", "uupaa", "WebModule", "Unstable"],
   "repository": {
@@ -30,7 +30,9 @@
     "patch": "node ../WebModule/run/patch.js",
     "setup": "node ../WebModule/run/setup.js",
     "start": "cd ../; Python -m SimpleHTTPServer 8000 &",
-    "stop": "killall -- Python -m SimpleHTTPServer 8000; exit 0"
+    "stop": "killall -- Python -m SimpleHTTPServer 8000; exit 0",
+    "make_assets": "cd test/assets; ./make_video; cd -",
+    "clean_assets": "cd test/assets; rm -rf ./ff; rm -rf ./js; cd -"
   },
   "webmodule": {
     "develop": false,
@@ -75,7 +77,7 @@
     "uupaa.bit.js": "",
     "uupaa.hash.js": "",
     "uupaa.hexdump.js": "",
-    "uupaa.typedarray.js": ""
+    "uupaa.fileloader.js": ""
   },
   "devDependencies": {},
   "lib": "./lib/",

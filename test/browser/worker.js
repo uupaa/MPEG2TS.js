@@ -22,7 +22,7 @@ onmessage = function(event) {
     importScripts("../../node_modules/uupaa.bit.js/lib/BitView.js");
     importScripts("../../node_modules/uupaa.hash.js/lib/Hash.js");
     importScripts("../../node_modules/uupaa.hexdump.js/lib/HexDump.js");
-    importScripts("../../node_modules/uupaa.typedarray.js/lib/TypedArray.js");
+    importScripts("../../node_modules/uupaa.fileloader.js/lib/FileLoader.js");
     importScripts("../wmtools.js");
     importScripts("../../lib/MPEG2TSParser.js");
     importScripts("../../lib/MPEG2TS.js");
