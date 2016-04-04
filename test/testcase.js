@@ -28,7 +28,7 @@ function testMPEG2TS(test, pass, miss) {
     var sourceFile = "../assets/ff/png.all.mp4.00.ts";
 
     FileLoader.toArrayBuffer(sourceFile, function(buffer) {
-        console.log("LOAD FROM: ", sourceFile, buffer.byteLength);
+        console.log("testMPEG2TS: ", sourceFile, buffer.byteLength);
 
         var mpeg2ts                 = MPEG2TS.parse( new Uint8Array(buffer) );
         var videoByteStream         = MPEG2TS.convertTSPacketToByteStream( mpeg2ts["VIDEO_TS_PACKET"] );
