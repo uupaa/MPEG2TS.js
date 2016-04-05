@@ -22,6 +22,8 @@ onmessage = function(event) {
     importScripts("../../node_modules/uupaa.bit.js/lib/Bit.js");
     importScripts("../../node_modules/uupaa.bit.js/lib/BitView.js");
     importScripts("../../node_modules/uupaa.hash.js/lib/Hash.js");
+    importScripts("../../node_modules/uupaa.adts.js/lib/ADTS.js");
+    importScripts("../../node_modules/uupaa.base64.js/lib/Base64.js");
     importScripts("../../node_modules/uupaa.hexdump.js/lib/HexDump.js");
     importScripts("../../node_modules/uupaa.fileloader.js/lib/FileLoader.js");
     importScripts("../../node_modules/uupaa.mpeg4bytestream.js/node_modules/uupaa.nalunit.js/lib/NALUnitType.js");

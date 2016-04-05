@@ -10,6 +10,8 @@ require("../../node_modules/uupaa.typedarray.js/lib/TypedArray.js");
 require("../../node_modules/uupaa.bit.js/lib/Bit.js");
 require("../../node_modules/uupaa.bit.js/lib/BitView.js");
 require("../../node_modules/uupaa.hash.js/lib/Hash.js");
+require("../../node_modules/uupaa.adts.js/lib/ADTS.js");
+require("../../node_modules/uupaa.base64.js/lib/Base64.js");
 require("../../node_modules/uupaa.hexdump.js/lib/HexDump.js");
 require("../../node_modules/uupaa.fileloader.js/lib/FileLoader.js");
 require("../../node_modules/uupaa.mpeg4bytestream.js/node_modules/uupaa.nalunit.js/lib/NALUnitType.js");

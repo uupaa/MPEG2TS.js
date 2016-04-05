@@ -1,6 +1,6 @@
 {
   "name": "uupaa.mpeg2ts.js",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "MPEG-2 TS Demuxer.",
   "url": "https://github.com/uupaa/MPEG2TS.js",
   "keywords": ["MPEG-2", "MPEG-2 TS", "MPEG-2 System", "demuxer", "uupaa", "WebModule", "Unstable"],
@@ -81,7 +81,9 @@
     "uupaa.mpeg4bytestream.js": ""
   },
   "devDependencies": {
-    "uupaa.typedarray.js": ""
+    "uupaa.typedarray.js": "",
+    "uupaa.adts.js": "",
+    "uupaa.base64.js": ""
   },
   "lib": "./lib/",
   "main": "./index.js",
