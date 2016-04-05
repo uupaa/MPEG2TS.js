@@ -80,7 +80,9 @@
     "uupaa.fileloader.js": "",
     "uupaa.mpeg4bytestream.js": ""
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "uupaa.typedarray.js": ""
+  },
   "lib": "./lib/",
   "main": "./index.js",
   "author": "uupaa",

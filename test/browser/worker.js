@@ -18,6 +18,7 @@ onmessage = function(event) {
     WebModule.VERBOSE = true;
     WebModule.PUBLISH = true;
 
+    importScripts("../../node_modules/uupaa.typedarray.js/lib/TypedArray.js");
     importScripts("../../node_modules/uupaa.bit.js/lib/Bit.js");
     importScripts("../../node_modules/uupaa.bit.js/lib/BitView.js");
     importScripts("../../node_modules/uupaa.hash.js/lib/Hash.js");
