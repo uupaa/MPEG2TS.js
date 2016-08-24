@@ -313,14 +313,12 @@ function _splitFunctionDeclaration(sourceCode) { // @arg String - function code
     //
     var code = sourceCode.trim();
     var lines = code.split("\n");
-    var basePos = lines[0].indexOf("//");
-    var min = 10;
+    var x = lines[0].indexOf("//");
+    var i = 0, iz = lines.length;
 
-    if (basePos >= min) { // "function foo() {"
-        for (var i = 1, iz = lines.length; i < iz; ++i) {
-            var pos = lines[i].indexOf("//"); // get header comment position(column)
-
-            if (pos < min || pos < basePos) {
+    if (x >= 10) {
+        for (; i < iz; ++i) {
+            if (lines[i].indexOf("//") !== x) {
                 break;
             }
         }
@@ -710,11 +708,9 @@ Valid["repository"]     = "https://github.com/uupaa/Valid.js";
 Valid["args"]           = Valid_args;           // Valid.args(api:Function, args:Array|ArrayLike):void
 Valid["type"]           = Valid_type;           // Valid.type(value:Any, types:String):Boolean
 Valid["some"]           = Valid_some;           // Valid.some(value:String|null|undefined, candidate:String|Object, ignoreCase:Boolean = false):Boolean
-Valid["keys"]           = Valid_keys;           // Valid.keys(object:Object|Array|null|undefined, key:String):Boolean
-Valid["values"]         = Valid_values;         // Valid.values(object:Object|Array|null|undefined, value:Array):Boolean
+Valid["keys"]           = Valid_keys;           // Valid.keys(value:Object|null|undefined, keys:String):Boolean
 Valid["json"]           = Valid_json;           // Valid.json(json:Object, scheme:Object):Boolean
 Valid["stack"]          = Valid_stack;          // Valid.stack(message:String = "", depth:Integer = 3):String
-
 // --- extension ---
 Valid["register"]       = Valid_register;       // Valid.register(type:HookTypeString, callback:Function):void
 Valid["unregister"]     = Valid_unregister;     // Valid.unregister(type:HookTypeString):void
@@ -768,11 +764,10 @@ function Valid_type(value,   // @arg Any
         case "Null":        return value === null;
         case "Undefined":   return value === undefined;
         case "Array":       return Array.isArray(value);
-        case "Object":      return _isObject(value || 0);
+        case "Object":      return (value || 0).constructor === ({}).constructor;
         case "FunctionArray":
                             return Array.isArray(value) && _isFunctionArray(value);
-        case "Percent":     return _isNumber(value) && value >= 0.0 && value <= 1.0;
-        case "Node":        return _isNode(value);
+        case "Percent":     return typeof value === "number" && value >= 0.0 && value <= 1.0;
         // --- Integer ---
         case "Integer":     return _isInt(value);
         case "Int32":       return _isInt(value)  && value <= 0x7fffffff && value >= -0x80000000;
@@ -848,22 +843,10 @@ function Valid_type(value,   // @arg Any
     }
 
     function _isInt(value) {
-        return _isNumber(value) && Math.ceil(value) === value;
+        return typeof value === "number" && Math.ceil(value) === value;
     }
     function _isUint(value) {
-        return _isNumber(value) && Math.ceil(value) === value && value >= 0;
-    }
-    function _isNode(value) {
-        if (value && "constructor" in value) {
-            if ("prototype" in value["constructor"]) {
-                var v = value["constructor"]["prototype"];
-
-                return v instanceof HTMLElement ||
-                       v instanceof Element ||
-                       v instanceof Node;
-            }
-        }
-        return false;
+        return typeof value === "number" && Math.ceil(value) === value && value >= 0;
     }
 }
 
@@ -948,8 +931,8 @@ function Valid_some(value,        // @arg String|null|undefined - "a"
     if (value === null || value === undefined) {
         return true; // [!]
     }
-    var keys = _isString(candidate) ? candidate.split(SPLITTER)
-             : _isObject(candidate) ? Object.keys(candidate)
+    var keys = typeof candidate === "string"              ? candidate.split(SPLITTER)
+             : candidate.constructor === ({}).constructor ? Object.keys(candidate)
              : [];
 
     if (ignoreCase) {
@@ -963,64 +946,20 @@ function Valid_some(value,        // @arg String|null|undefined - "a"
     });
 }
 
-function Valid_keys(object, // @arg Object|Array|null|undefined - { a: 1, b: 2 }
-                    key) {  // @arg String - valid choices. "a|b"
-                            // @ret Boolean - false is unmatched object.
-    if (object === null || object === undefined) {
-        return true; // [!]
-    }
-    if (_isObject(object) ||          // Valid.keys({a:0,b:1}, "a|b")
-        Array.isArray(object)) {      // Valid.keys([9,9],     "0|1")
-
-        var list = _split(key);
-
-        return Object.keys(object).every(function(objectKey) {
-            return list.indexOf(objectKey) >= 0;
-        });
-    }
-    return false;
-}
-
-function Valid_values(object,  // @arg Object|Array|null|undefined - { a: 1, b: 2 }
-                      value) { // @arg Array - valid choices. [1, 2]
-                               // @ret Boolean - false is unmatched object.
-    if (object === null || object === undefined) {
-        return true; // [!]
-    }
-    if (_isObject(object) ||          // Valid.values({a:0,b:1}, [0,1])
-        Array.isArray(object)) {      // Valid.values([9,9], [9,9])
-
-        return Object_values(object).every(function(objectValue) {
-            return value.indexOf(objectValue) >= 0;
-        });
-    }
-    return false;
-}
-
-function Valid_some(value,        // @arg String|null|undefined - "a"
-                    candidate,    // @arg String|Object - "a|b|c", { 1: "a", 2: "b" }, ["a", "b"]
-                    ignoreCase) { // @arg Boolean = false
-                                  // @ret Boolean - true -> has, false -> has not
-    // Valid.some("foo", "foo|bar"); -> true
-    // Valid.some("foo", { foo:1, bar: 2 }); -> true
-    ignoreCase = ignoreCase || false;
-
+function Valid_keys(value,  // @arg Object|null|undefined - { key1, key2 }
+                    keys) { // @arg String - valid choices. "a,b" or "a|b" or "a/b"
+                            // @ret Boolean - false is invalid value.
     if (value === null || value === undefined) {
         return true; // [!]
     }
-    var keys = _isString(candidate) ? candidate.split(SPLITTER)
-             : _isObject(candidate) ? Object.keys(candidate)
-             : [];
+    if (value.constructor === ({}).constructor) {
+        var items = keys.replace(/ /g, "").split(SPLITTER);
 
-    if (ignoreCase) {
-        value = value.toLowerCase();
+        return Object.keys(value).every(function(key) {
+            return items.indexOf(key) >= 0;
+        });
     }
-    return keys.some(function(token) {
-        if (ignoreCase) {
-            return value === token.toLowerCase();
-        }
-        return value === token;
-    });
+    return false;
 }
 
 function Valid_json(json,     // @arg JSONObject
@@ -1083,39 +1022,7 @@ function Valid_isRegistered(type) { // @arg HookTypeString
     return type in _hook;
 }
 
-function _isObject(object) { // @arg Object|Any
-                             // @ret Boolean
-    return object.constructor === ({}).constructor;
-}
-
-function _isNumber(object) { // @arg Number|Any
-                             // @ret Boolean
-    return typeof object === "number";
-}
-
-function _isString(object) { // @arg String|Any
-                             // @ret Boolean
-    return typeof object === "string";
-}
-
-function _split(keywords) { // @arg String
-    return keywords.replace(/ /g, "").split(SPLITTER);
-}
-
-// ES2016 function. copy from ES.js
-function Object_values(source) { // @arg Object|Function|Array
-                                 // @ret ValueAnyArray [key, ... ]
-
-    var keys = Object.keys(source);
-    var i = 0, iz = keys.length;
-    var result = new Array(iz);
-
-    for (; i < iz; ++i) {
-        result[i] = source[keys[i]];
-    }
-    return result;
-}
-
+// --- validate / assertions -------------------------------
 // --- exports ---------------------------------------------
 if (typeof module !== "undefined") {
     module["exports"] = Valid;
@@ -1140,11 +1047,6 @@ function Help(target,      // @arg Function|String - function or function-path o
               options) {   // @arg Object = {} - { nolink }
                            // @options.nolink Boolean = false
                            // @desc quick online help.
-    if (typeof target === "object" && target["repository"]) {
-        // var Class = { function, ... } object
-        console.info(target);
-        return;
-    }
     _if(!/string|function/.test(typeof target),     Help, "target");
     _if(!/string|undefined/.test(typeof highlight), Help, "highlight");
     options = options || {};

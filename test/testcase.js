@@ -32,18 +32,30 @@ function testMPEG2TS_video_packet_only(test, pass, miss) {
 
     //MPEG2TS.VERBOSE = false;
     //MPEG2TSParser.VERBOSE = false;
-    MPEG4ByteStream.VERBOSE = false;
+    //MPEG4ByteStream.VERBOSE = false;
 
     FileLoader.toArrayBuffer(sourceFile, function(buffer) {
         console.log("testMPEG2TS: ", sourceFile, buffer.byteLength);
 
 debugger;
-        var mpeg2ts                 = MPEG2TS.parse( new Uint8Array(buffer) );
-        var videoByteStream         = MPEG2TS.convertTSPacketToByteStream( mpeg2ts["VIDEO_TS_PACKET"] );
+        var mpeg2ts                 = MPEG2TS.demux( new Uint8Array(buffer) );
+        var videoByteStream         = MPEG2TS.toByteStream( mpeg2ts["VIDEO_TS_PACKET"] );
         var videoNALUnitObjectArray = MPEG4ByteStream.convertByteStreamToNALUnitObjectArray( videoByteStream );
 
+/*
         if (videoNALUnitObjectArray.length === 21 &&
-            videoNALUnitObjectArray[0].NAL_UNIT_TYPE === "AUD") {
+            videoNALUnitObjectArray[0].nal_unit_type === 9) {
+            test.done(pass());
+        } else {
+            test.done(miss());
+        }
+ */
+debugger;
+        var mpeg2ts      = MPEG2TS.demux( new Uint8Array(buffer) );
+        var videoNALUnit = MPEG2TS.toNALUnit( mpeg2ts["VIDEO_TS_PACKET"] );
+
+        if (videoNALUnit.length === 21 &&
+            videoNALUnit[0].nal_unit_type === 9) {
             test.done(pass());
         } else {
             test.done(miss());
@@ -66,14 +78,13 @@ function testMPEG2TS_video_and_audio_mixed(test, pass, miss) {
     //NALUnitEBSP.VERBOSE = false
 
 debugger;
-    var mpeg2ts         = MPEG2TS.parse( u8a );
-    var videoByteStream = MPEG2TS.convertTSPacketToByteStream( mpeg2ts["VIDEO_TS_PACKET"] );
-    var videoNALUnit    = MPEG4ByteStream.convertByteStreamToNALUnitObjectArray( videoByteStream );
+    var mpeg2ts         = MPEG2TS.demux( u8a );
+    var videoNALUnit    = MPEG2TS.toNALUnit( mpeg2ts["VIDEO_TS_PACKET"] );
   //var mp4tree         = MP4Muxer.mux( videoNALUnit );
   //var diagnostic      = mp4tree.diagnostic();
   //var json            = mp4tree.dump();
 
-    var audioByteStream = MPEG2TS.convertTSPacketToByteStream( mpeg2ts["AUDIO_TS_PACKET"] );
+    var audioByteStream = MPEG2TS.toByteStream( mpeg2ts["AUDIO_TS_PACKET"] );
     var audioMetaData   = ADTS.parse( audioByteStream );
     var audioDuration   = audioMetaData.duration;
 

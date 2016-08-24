@@ -1,6 +1,6 @@
 {
   "name": "uupaa.mpeg2ts.js",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "MPEG-2 TS Demuxer.",
   "url": "https://github.com/uupaa/MPEG2TS.js",
   "keywords": ["MPEG-2", "MPEG-2 TS", "MPEG-2 System", "demuxer", "uupaa", "WebModule", "Unstable"],
@@ -32,7 +32,8 @@
     "start": "cd ../; Python -m SimpleHTTPServer 8000 &",
     "stop": "killall -- Python -m SimpleHTTPServer 8000; exit 0",
     "make_assets": "cd test/assets; ./make_video; cd -",
-    "clean_assets": "cd test/assets; rm -rf ./ff; rm -rf ./js; cd -"
+    "clean_assets": "cd test/assets; rm -rf ./ff; rm -rf ./js; cd -",
+    "class": "node ../WebModule/run/class.js"
   },
   "webmodule": {
     "develop": false,
@@ -40,35 +41,40 @@
     "browser": {
       "output": "release/MPEG2TS.b.min.js",
       "source": [
-        "lib/MPEG2TSParser.js",
+        "lib/MPEG2TSNALUnit.js",
+        "lib/MPEG2TSDemuxer.js",
         "lib/MPEG2TS.js"
       ]
     },
     "worker": {
       "output": "release/MPEG2TS.w.min.js",
       "source": [
-        "lib/MPEG2TSParser.js",
+        "lib/MPEG2TSNALUnit.js",
+        "lib/MPEG2TSDemuxer.js",
         "lib/MPEG2TS.js"
       ]
     },
     "node": {
       "output": "release/MPEG2TS.n.min.js",
       "source": [
-        "lib/MPEG2TSParser.js",
+        "lib/MPEG2TSNALUnit.js",
+        "lib/MPEG2TSDemuxer.js",
         "lib/MPEG2TS.js"
       ]
     },
     "nw": {
       "output": "release/MPEG2TS.nw.min.js",
       "source": [
-        "lib/MPEG2TSParser.js",
+        "lib/MPEG2TSNALUnit.js",
+        "lib/MPEG2TSDemuxer.js",
         "lib/MPEG2TS.js"
       ]
     },
     "el": {
       "output": "release/MPEG2TS.el.min.js",
       "source": [
-        "lib/MPEG2TSParser.js",
+        "lib/MPEG2TSNALUnit.js",
+        "lib/MPEG2TSDemuxer.js",
         "lib/MPEG2TS.js"
       ]
     }
