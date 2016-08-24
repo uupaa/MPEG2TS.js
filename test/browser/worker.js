@@ -19,17 +19,13 @@ onmessage = function(event) {
     WebModule.PUBLISH = true;
 
     importScripts("../../node_modules/uupaa.typedarray.js/lib/TypedArray.js");
-    importScripts("../../node_modules/uupaa.bit.js/lib/Bit.js");
-    importScripts("../../node_modules/uupaa.bit.js/lib/BitView.js");
-    importScripts("../../node_modules/uupaa.hash.js/lib/Hash.js");
+    importScripts("../../node_modules/uupaa.aac.js/node_modules/uupaa.bit.js/lib/Bit.js");
+    importScripts("../../node_modules/uupaa.aac.js/node_modules/uupaa.bit.js/lib/BitView.js");
+    importScripts("../../node_modules/uupaa.aac.js/node_modules/uupaa.hash.js/lib/Hash.js");
     importScripts("../../node_modules/uupaa.aac.js/lib/AAC.js");
     importScripts("../../node_modules/uupaa.aac.js/lib/ADTS.js");
     importScripts("../../node_modules/uupaa.base64.js/lib/Base64.js");
-    importScripts("../../node_modules/uupaa.hexdump.js/lib/HexDump.js");
-    importScripts("../../node_modules/uupaa.fileloader.js/node_modules/uupaa.uri.js/lib/URI.js");
-    importScripts("../../node_modules/uupaa.fileloader.js/node_modules/uupaa.uri.js/lib/URISearchParams.js");
-    importScripts("../../node_modules/uupaa.fileloader.js/lib/FileLoader.js");
-    importScripts("../../node_modules/uupaa.fileloader.js/lib/FileLoaderQueue.js");
+    importScripts("../../node_modules/uupaa.mpeg4bytestream.js/node_modules/uupaa.hexdump.js/lib/HexDump.js");
     importScripts("../../node_modules/uupaa.mpeg4bytestream.js/node_modules/uupaa.nalunit.js/lib/NALUnitType.js");
     importScripts("../../node_modules/uupaa.mpeg4bytestream.js/node_modules/uupaa.nalunit.js/lib/NALUnitParameterSet.js");
     importScripts("../../node_modules/uupaa.mpeg4bytestream.js/node_modules/uupaa.nalunit.js/lib/NALUnitEBSP.js");
@@ -41,6 +37,10 @@ onmessage = function(event) {
     importScripts("../../node_modules/uupaa.mpeg4bytestream.js/node_modules/uupaa.nalunit.js/lib/NALUnitNON_IDR.js");
     importScripts("../../node_modules/uupaa.mpeg4bytestream.js/node_modules/uupaa.nalunit.js/lib/NALUnit.js");
     importScripts("../../node_modules/uupaa.mpeg4bytestream.js/lib/MPEG4ByteStream.js");
+    importScripts("../../node_modules/uupaa.fileloader.js/node_modules/uupaa.uri.js/lib/URI.js");
+    importScripts("../../node_modules/uupaa.fileloader.js/node_modules/uupaa.uri.js/lib/URISearchParams.js");
+    importScripts("../../node_modules/uupaa.fileloader.js/lib/FileLoader.js");
+    importScripts("../../node_modules/uupaa.fileloader.js/lib/FileLoaderQueue.js");
     importScripts("../wmtools.js");
     importScripts("../../lib/MPEG2TSNALUnit.js");
     importScripts("../../lib/MPEG2TSDemuxer.js");
