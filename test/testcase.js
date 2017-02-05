@@ -3,12 +3,12 @@ var ModuleTestMPEG2TS = (function(global) {
 var test = new Test(["MPEG2TS"], { // Add the ModuleName to be tested here (if necessary).
         disable:    false, // disable all tests.
         browser:    true,  // enable browser test.
-        worker:     false,  // enable worker test.
+        worker:     true,  // enable worker test.
         node:       true,  // enable node test.
         nw:         true,  // enable nw.js test.
         el:         true,  // enable electron (render process) test.
         button:     true,  // show button.
-        both:       false,  // test the primary and secondary modules.
+        both:       true,  // test the primary and secondary modules.
         ignoreError:false, // ignore error.
         callback:   function() {
         },
@@ -21,6 +21,7 @@ if (IN_BROWSER || IN_NW || IN_EL || IN_NODE) {
     test.add([
         testMPEG2TS_video_packet_only,
         testMPEG2TS_video_and_audio_mixed,
+        testMPEG2TS_VIDEO_PCR,
         //testWriteTs,
     ]);
 }
@@ -109,6 +110,30 @@ function testWriteTs(test, pass, miss) {
         require("fs").writeFileSync("test/assets/sample.ts", new Buffer(u8a.buffer), "binary");
     }
     test.done(pass());
+}
+
+function testMPEG2TS_VIDEO_PCR(test, pass, miss) {
+    var sourceFile = IN_NODE ? "test/assets/ff/png.all.mp4.00.ts"
+                             : "../assets/ff/png.all.mp4.00.ts";
+
+    FileLoader.toArrayBuffer(sourceFile, function(buffer) {
+        console.log("testMPEG2TS: ", sourceFile, buffer.byteLength);
+
+        var mpeg2ts  = MPEG2TS.demux( new Uint8Array(buffer) );
+        var nalUnits = MPEG2TS.toNALUnit(mpeg2ts.VIDEO_TS_PACKET);
+        var VIDEO_PCR = mpeg2ts.VIDEO_PCR; // 
+
+        if (nalUnits.length === 21 &&
+            nalUnits[0].nal_unit_type === 9 &&
+            VIDEO_PCR.join(",") === [0.7, 1.7, 2.7, 3.7, 4.7].join(",")) {
+            test.done(pass());
+        } else {
+            test.done(miss());
+        }
+
+    }, function(error) {
+        console.error(error.message);
+    });
 }
 
 return test.run();
